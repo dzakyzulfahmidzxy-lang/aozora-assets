@@ -1,0 +1,382 @@
+/* 1. SETUP FONT & UNIVERSAL */
+@font-face {
+    font-family: 'MotoGP-Display';
+    src: url('MGPDisplay-BoldExpanded.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+:root {
+    --e-horizon-blue: #379bff;
+    --e-horizon-pink: #ff37a1;
+    --clean-bg: #f5f5f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Perbaikan dari box-content */
+}
+
+body {
+    font-family: 'MotoGP-Display', sans-serif;
+    background-color: transparent;
+    color: #111;
+    text-transform: uppercase;
+    /* Aktifkan ligatur secara global agar tidak perlu panggil class terus */
+    font-variant-ligatures: discretionary-ligatures;
+    font-feature-settings: "dlig" 1;
+}
+
+/* Class khusus jika ingin dipanggil manual */
+.mgp-display-bold-expanded-dlig {
+    font-feature-settings: "dlig" 1;
+    font-variant-ligatures: discretionary-ligatures;
+}
+
+/* 2. STYLE UNTUK HOME.HTML */
+.main-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #111;
+    padding: 20px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+
+.nav-link:hover { color: var(--e-horizon-blue); }
+
+.eh-logo {
+    color: black;
+    background: linear-gradient(90deg, #d3cfff, #ffcfef);
+    padding: 8px 20px;
+    font-size: 1.3rem;
+    border-radius: 2px;
+}
+
+.submenu {
+    display: none;
+    background-color: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.submenu p { margin: 10px 0; }
+
+.submenu-link {
+    color: #111;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: 0.2s;
+}
+
+.submenu-link:hover { color: var(--e-horizon-blue); padding-left: 10px; }
+
+/* 3. STYLE UNTUK TOWER_ATAS.HTML */
+.tower-container {
+    transform: skewX(-10deg);
+    display: inline-block;
+}
+
+.session-tag {
+    background: linear-gradient(90deg, var(--e-horizon-blue), var(--e-horizon-pink));
+    color: white;
+    padding: 4px 15px;
+    font-size: 0.9rem;
+    width: fit-content;
+}
+
+.main-title {
+    background: white;
+    color: black;
+    font-size: 1.8rem;
+    padding: 8px 25px;
+    border-bottom: 4px solid #111;
+}
+
+.sub-title {
+    color: white;
+    font-size: 0.8rem;
+    background: #111;
+    padding: 4px 15px;
+    width: fit-content;
+}
+
+/* 4. STYLE UNTUK RIDERS.HTML */
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.grid-row {
+    display: flex;
+    align-items: center;
+    transform: skewX(-15deg);
+}
+
+.grid-pos {
+    background: linear-gradient(90deg, var(--e-horizon-blue), var(--e-horizon-pink));
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 12px 25px;
+    min-width: 70px;
+    text-align: center;
+}
+
+.grid-name {
+    background: rgba(255, 255, 255, 0.95);
+    color: black;
+    font-size: 1.8rem;
+    padding: 12px 30px;
+    min-width: 350px;
+}
+
+.grid-team {
+    background: rgba(0, 0, 0, 0.8);
+    color: #eee;
+    font-size: 1rem;
+    padding: 12px 25px;
+    min-width: 250px;
+}
+/* Tambahkan ini di bagian bawah STYLE UNTUK RIDERS.HTML */
+
+.grid-row {
+    display: flex;
+    align-items: center;
+    transform: skewX(-15deg);
+    margin-bottom: 10px;
+    opacity: 0; /* Mulai dari transparan */
+    animation: slideInGrid 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Jeda waktu muncul (Staggered) */
+.grid-row:nth-child(1) { animation-delay: 0.1s; }
+.grid-row:nth-child(2) { animation-delay: 0.3s; }
+.grid-row:nth-child(3) { animation-delay: 0.5s; }
+.grid-row:nth-child(4) { animation-delay: 0.7s; }
+.grid-row:nth-child(5) { animation-delay: 0.9s; }
+
+/* Logika Animasi Gerak */
+@keyframes slideInGrid {
+    from {
+        transform: translateX(-100px) skewX(-15deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) skewX(-15deg);
+        opacity: 1;
+    }
+}
+
+/* --- STYLE & ANIMASI TOWER ATAS (KILAU PRO) --- */
+
+.tower-container {
+    transform: skewX(-10deg);
+    display: inline-block;
+    /* Efek Muncul Halus saat Load */
+    animation: towerEntryPro 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+/* 1. Bar Atas (Gradien) */
+.session-tag {
+    background: linear-gradient(90deg, var(--e-horizon-blue), var(--e-horizon-pink));
+    color: white;
+    padding: 4px 15px;
+    font-size: 0.9rem;
+    width: fit-content;
+    border-radius: 2px 2px 0 0;
+}
+
+/* 2. Bar Utama Putih (Tempat Efek Kilau) */
+.main-title {
+    background: white;
+    color: black;
+    font-size: 1.8rem;
+    padding: 8px 25px;
+    border-bottom: 4px solid #111;
+    position: relative; /* Penting buat efek kilau */
+    overflow: hidden; /* Supaya kilaunya nggak keluar bar */
+}
+
+/* Logika Efek Kilau (Shimmer) */
+.main-title::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%; /* Mulai dari jauh di kiri */
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.8), /* Cahaya kilau putih terang */
+        transparent
+    );
+    transform: skewX(-20deg); /* Kilaunya miring */
+    animation: shineEffect 3s infinite 1s; /* Jalan terus tiap 3 detik */
+}
+
+/* 3. Bar Hitam Bawah */
+.sub-title {
+    color: white;
+    font-size: 0.8rem;
+    background: #111;
+    padding: 4px 15px;
+    width: fit-content;
+    border-radius: 0 0 0 2px;
+}
+
+/* --- KEYFRAMES (LOGIKA GERAK) --- */
+
+/* Muncul Halus */
+@keyframes towerEntryPro {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) skewX(-10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) skewX(-10deg);
+    }
+}
+
+/* Gerakan Kilatan Cahaya ngelewatin teks */
+@keyframes shineEffect {
+    0% { left: -150%; }
+    15% { left: 150%; } /* Lewat cepet banget */
+    100% { left: 150%; } /* Jeda lama sebelum ngulang */
+}
+
+/* --- STYLE SCOREBOARD (PAPAN SKOR) --- */
+
+.score-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 20px;
+}
+
+.score-row {
+    display: flex;
+    align-items: center;
+    transform: skewX(-15deg);
+    opacity: 0;
+    animation: slideInScore 0.5s ease-out forwards;
+}
+
+/* Animasi Muncul Berurutan */
+.score-row:nth-child(1) { animation-delay: 0.1s; }
+.score-row:nth-child(2) { animation-delay: 0.2s; }
+.score-row:nth-child(3) { animation-delay: 0.3s; }
+/* ...dan seterusnya */
+
+/* Nomor Urut / Posisi */
+.score-rank {
+    background: #111;
+    color: white;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    min-width: 50px;
+    text-align: center;
+    border-left: 5px solid var(--e-horizon-blue);
+}
+
+/* Nama Rider */
+.score-name {
+    background: white;
+    color: black;
+    padding: 10px 25px;
+    font-size: 1.5rem;
+    min-width: 250px;
+}
+
+/* Poin (Bagian Gradien) */
+.score-points {
+    background: linear-gradient(90deg, var(--e-horizon-blue), var(--e-horizon-pink));
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Animasi Slide */
+@keyframes slideInScore {
+    from {
+        transform: translateX(50px) skewX(-15deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) skewX(-15deg);
+        opacity: 1;
+    }
+}
+
+/* --- STYLE TAMBAHAN UNTUK HOME --- */
+
+.hero-section {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(circle, #222 0%, #000 100%);
+    color: white;
+    border-bottom: 5px solid var(--e-horizon-blue);
+}
+
+.hero-logo {
+    font-size: 5rem;
+    margin-bottom: 10px;
+    letter-spacing: -2px;
+    background: linear-gradient(90deg, #fff, #888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--e-horizon-blue);
+    letter-spacing: 5px;
+    margin-bottom: 30px;
+}
+
+.btn-start {
+    padding: 15px 40px;
+    background: linear-gradient(90deg, var(--e-horizon-blue), var(--e-horizon-pink));
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transform: skewX(-15deg);
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-start:hover {
+    transform: skewX(-15deg) scale(1.1);
+    box-shadow: 0 0 20px var(--e-horizon-blue);
+}
+
+/* Footer ala TV Broadcast */
+.footer-bar {
+    background: #111;
+    color: #555;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
